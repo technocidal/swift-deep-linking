@@ -173,6 +173,6 @@ private func showPhoto(with deepLink: ShowPhotoDeepLink) -> Bool {
 
 There are other deep linking libraries for Swift developers, some of which have much more functionality and flexibility. Based on my experience developing iOS and tvOS apps that need deep linking, this suits my needs. Sometimes less is more.
 
-<a href="https://0wrx.com">
+<a href="https://0rwx.com">
     <img src="https://0rwx.com/static/AI-W.png" width="44"/>
 </a>
