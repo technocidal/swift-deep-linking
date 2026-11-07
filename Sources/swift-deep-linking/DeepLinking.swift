@@ -5,7 +5,7 @@
 //  Copyright (c) 2024 technocidal. Licensed under the MIT License.
 //
 
-import Foundation
+public import Foundation
 
 // MARK: - DeepLink
 /// Adopted by a type whose values are matched and extracted from a URL.
@@ -42,7 +42,7 @@ public struct DeepLinkValues {
 // MARK: - DeepLinkTemplate
 /// Describes how to extract a deep link's values from a URL.
 /// A template is considered to match a URL if all of its required values are found in the URL.
-public struct DeepLinkTemplate {
+public struct DeepLinkTemplate: Sendable {
     // MARK: - Public API
     public init() {
         self.init(pathParts: [], parameters: [])
@@ -117,17 +117,17 @@ public struct DeepLinkTemplate {
 // MARK: - DeepLinkRecognizer
 /// Creates a deep link object that matches a URL.
 public struct DeepLinkRecognizer {
-    private let deepLinkTypes: [DeepLink.Type]
+    private let deepLinkTypes: [any DeepLink.Type]
     
     /// Initializes a new recognizer with a list of available deep link types.
     /// - Parameter deepLinkTypes: An array of deep link types which can be created based on a URL.
     /// The template of each type is evaluated in the order the types appear in this array.
-    public init(deepLinkTypes: [DeepLink.Type]) {
+    public init(deepLinkTypes: [any DeepLink.Type]) {
         self.deepLinkTypes = deepLinkTypes
     }
     
     /// Returns a new `DeepLink` object whose template matches the specified URL, if possible.
-    public func deepLink(matching url: URL) -> DeepLink? {
+    public func deepLink(matching url: URL) -> (any DeepLink)? {
         for deepLinkType in deepLinkTypes {
             if let values = DeepLinkRecognizer.extractValues(in: deepLinkType.template, from: url) {
                 return deepLinkType.init(values: values)
@@ -232,7 +232,7 @@ public struct DeepLinkRecognizer {
 
 
 // MARK: - QueryStringParameter extension
-extension DeepLinkTemplate.QueryStringParameter: Hashable, Equatable {
+extension DeepLinkTemplate.QueryStringParameter: Hashable, Equatable, Sendable {
     
     fileprivate var name: String {
         switch self {
