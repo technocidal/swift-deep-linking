@@ -11,7 +11,17 @@ It creates a data object from values in a URL, which can be used to perform an a
 * This repository includes a demo app and unit tests
 
 # How to add it to your project
-Add the file [DeepLinking.swift](/DeepLinking/DeepLinking.swift) to your Xcode project.
+Add this repository as a Swift package in Xcode:
+
+1. Select **File > Add Package Dependencies…**
+2. Enter `https://github.com/technocidal/swift-deep-linking`
+3. Add the `DeepLinking` package product to your app target.
+
+Then import the module in any Swift file that uses the API:
+
+```swift
+import DeepLinking
+```
 
 # Conceptual overview
 Your app is passed a deep link URL, inspects the URL to determine what it represents, and then performs the appropriate action for that deep link. Not all URLs represent a deep link your app knows how to handle, but all deep links can be expressed as a URL. The API presented here  figures out which deep link a URL matches, and extracts data values from the URL so that your app can perform the appropriate action.
