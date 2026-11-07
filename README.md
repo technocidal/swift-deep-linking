@@ -1,9 +1,5 @@
 # Simple Deep Linking in Swift
 
-<a href="https://0wrx.com">
-    <img src="https://0rwx.com/static/AI-W.png" width="44"/>
-</a>
-
 A simple way to consume custom deep link URLs in a Swift app.
 
 It creates a data object from values in a URL, which can be used to perform an action in your app.
@@ -176,3 +172,7 @@ private func showPhoto(with deepLink: ShowPhotoDeepLink) -> Bool {
 ## Short but sweet
 
 There are other deep linking libraries for Swift developers, some of which have much more functionality and flexibility. Based on my experience developing iOS and tvOS apps that need deep linking, this suits my needs. Sometimes less is more.
+
+<a href="https://0wrx.com">
+    <img src="https://0rwx.com/static/AI-W.png" width="44"/>
+</a>
