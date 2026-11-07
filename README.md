@@ -1,16 +1,23 @@
 # Simple Deep Linking in Swift
+
+<a href="https://0wrx.com">
+    <img src="https://0rwx.com/static/AI-W.png" width="44"/>
+</a>
+
 A simple way to consume custom deep link URLs in a Swift app.
 
 It creates a data object from values in a URL, which can be used to perform an action in your app.
 
-# Highlights
+## Highlights
+
 * An intuitive API that helps you easily work with custom deep link URLs
 * Supports extracting values from a URL's path, query string, and fragment
 * It's all contained in just one small Swift file
 * Written in Swift 3
 * This repository includes a demo app and unit tests
 
-# How to add it to your project
+## How to add it to your project
+
 Add this repository as a Swift package in Xcode:
 
 1. Select **File > Add Package Dependencies…**
@@ -23,10 +30,12 @@ Then import the module in any Swift file that uses the API:
 import DeepLinking
 ```
 
-# Conceptual overview
+## Conceptual overview
+
 Your app is passed a deep link URL, inspects the URL to determine what it represents, and then performs the appropriate action for that deep link. Not all URLs represent a deep link your app knows how to handle, but all deep links can be expressed as a URL. The API presented here  figures out which deep link a URL matches, and extracts data values from the URL so that your app can perform the appropriate action.
 
-# Simple example
+## Simple example
+
 Suppose that the URL `my.url.scheme://show/photo?name=cat` can be interpreted by your app as a command to `show` the `photo` in an image file whose `name` is `cat`. 
 
 Using the Deep Linking API in this repository, here's how to declare that your app supports this deep link…
@@ -51,13 +60,16 @@ struct ShowPhotoDeepLink: DeepLink {
     
 }
 ```
+
 This struct adopts the `DeepLink` protocol, which requires it to have a `static` property named `template` and an initializer whose sole parameter is `DeepLinkValues`.
 
 * `template` - A typed description of a URL from which an instance of the deep link type can be created.
 * `init(values:)` - An initializer that receives values extracted from a URL, already converted to the template-specified data types.
 
-# A more complicated example
+## A more complicated example
+
 Here's another example, from the [unit tests](/DeepLinking/DeepLinkingTests/DeepLinkingTests.swift). 
+
 ```swift
 // Examples:
 // my.url.scheme://display/upgrade?mustAccept=true&username=Josh
@@ -84,6 +96,7 @@ struct DisplayMessageDeepLink: DeepLink {
     
 }
 ```
+
 Notice that the `DeepLinkTemplate` includes a `term` and a `string`. 
 * `term` - Represents a hard-coded string that must appear in the URL path, at the specified location, for a URL to match this deep link type. 
 * `string` - Represents a string variable that must appear in the URL path, at the specified location, for a URL to match this deep link type. The value of the string will be included in the `DeepLinkValues` object passed to the deep link's initializer.
@@ -92,8 +105,10 @@ Aside from terms and strings, a URL path variable can be of type `int`, `double`
 
 Similarly, a deep link can declare what query string parameters must/can appear in a matching URL. A query string parameter can be required or optional. If a required parameter is not found in a URL, then that URL cannot be used to create the template's associated deep link type. A query parameter can be of type `int`, `double`, `bool`, or `string`.
 
-# Deep link recognition
+## Deep link recognition
+
 The job of detecting which kind of deep link a URL matches is handled by `DeepLinkRecognizer`. Here is how  `DisplayMessageDeepLink` from the previous section can be detected and created.
+
 ```swift
 func test_display_message_deep_link() {
     // A deep link recognizer that knows about the custom deep link type.
@@ -113,7 +128,9 @@ func test_display_message_deep_link() {
     }
 }
 ```
+
 When your `AppDelegate` receives a deep link URL, a `DeepLinkRecognizer` can be used to create the appropriate `DeepLink` object, if any of your `DeepLink` types can handle that URL. This code is from the demo app's [AppDelegate](/DeepLinking/DemoApp/AppDelegate.swift):
+
 ```swift
 private func executeDeepLink(with url: URL) -> Bool {
     // Create a recognizer with this app's custom deep link types.
@@ -135,7 +152,9 @@ private func executeDeepLink(with url: URL) -> Bool {
     }
 }
 ```
+
 The implementation details of how an app responds to a particular deep link is arbitrary, but here's an example just to help solidify the idea of where this deep linking API fits into an app.
+
 ```swift
 private func showPhoto(with deepLink: ShowPhotoDeepLink) -> Bool {
     guard let tabBarController = prepareTabBarController() else {
@@ -153,5 +172,7 @@ private func showPhoto(with deepLink: ShowPhotoDeepLink) -> Bool {
     return true
 }
 ```
-# Short but sweet
+
+## Short but sweet
+
 There are other deep linking libraries for Swift developers, some of which have much more functionality and flexibility. Based on my experience developing iOS and tvOS apps that need deep linking, this suits my needs. Sometimes less is more.
